@@ -4,7 +4,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { Server } from "socket.io";
 import setupSocket from "./sockets";
-
+import connectDB from "./utils/connectDb";
+import userRouter from "./routes/user.routes";
 dotenv.config();
 
 const app = express();
@@ -15,12 +16,16 @@ const io = new Server(server, {
   },
 });
 
+connectDB();
+
 app.use(cors());
 app.use(express.json());
-
 app.get("/", (req: Request, res: Response) => {
   res.send("<h1>Hello, this is the user management server!</h1>");
 });
+
+app.use("/api/v1/user", userRouter);
+
 setupSocket(io);
 
 const PORT = process.env.PORT || 5000;
