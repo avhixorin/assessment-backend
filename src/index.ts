@@ -1,7 +1,6 @@
 import express, { Request, Response } from "express";
 import http from "http";
 import cors from "cors";
-import mongoose from "mongoose";
 import dotenv from "dotenv";
 import { Server } from "socket.io";
 import setupSocket from "./sockets";
@@ -18,12 +17,6 @@ const io = new Server(server, {
 
 app.use(cors());
 app.use(express.json());
-
-// // MongoDB connection
-// mongoose
-//   .connect(process.env.MONGO_URI!)
-//   .then(() => console.log("MongoDB connected"))
-//   .catch((err) => console.error(err));
 
 app.get("/", (req: Request, res: Response) => {
   res.send("<h1>Hello, this is the user management server!</h1>");
